@@ -16,11 +16,18 @@ def find_first_in_register_stop(dna, start):
 def all_orfs_range(dna):
     dna = dna.upper()
     orf_ranges = []
-    starts = find_all_starts(dna)
-    for start in starts:
-        stop = find_first_in_register_stop(dna, start + 3)
-        if stop != -1:
-            orf_ranges.append((start, stop + 3))
+    # Check each of the three reading frames
+    for frame in range(3):
+        i = frame
+        while i <= len(dna) - 3:
+            codon = dna[i:i+3]
+            if codon == "ATG":
+                stop = find_first_in_register_stop(dna, i + 3)
+                if stop != -1:
+                    orf_ranges.append((i, stop + 3))
+                    i = stop + 3
+                    continue
+            i += 3
     return orf_ranges
 
 def longest_orf(dna):
@@ -28,9 +35,9 @@ def longest_orf(dna):
     orfs = all_orfs_range(dna)
     if not orfs:
         return None
-    longest_orf_seq = ""
+    longest_seq = ""
     for start, stop in orfs:
         seq = dna[start:stop]
-        if len(seq) > len(longest_orf_seq):
-            longest_orf_seq = seq
-    return longest_orf_seq
+        if len(seq) > len(longest_seq):
+            longest_seq = seq
+    return longest_seq
