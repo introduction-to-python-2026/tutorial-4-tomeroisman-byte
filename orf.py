@@ -1,23 +1,23 @@
 def find_all_starts(dna):
     starts = []
-    for l in range(len(dna)-2):
-        if dna[l: l+3] == "ATG":
-            starts.append(l)
+    for _1 in range(len(dna)-2):
+        if dna[_1: _1+3] == "ATG":
+            starts.append(_1)
     return starts
 
 def find_first_in_register_stop(dna):
-    for i in range(0, len(dna) - 2, 3):
-        if dna[i:i+3] in ("TAA", "TAG", "TGA"):
-            return i
+    for _2 in range(0, len(dna) - 2, 3):
+        if dna[_2:_2+3] in ("TAA", "TAG", "TGA"):
+            return _2
     return None
 
 def all_orfs_range(dna):
     starts = find_all_starts(dna)
     orf_ranges = []
-    for s in starts:
-        end = find_first_in_register_stop(dna[s:])
+    for start in starts:
+        end = find_first_in_register_stop(dna[start:])
         if end is not None:
-            orf_ranges.append((s,s+end))
+            orf_ranges.append((start,start + end))
     return orf_ranges
 
 def longest_orf(dna):
