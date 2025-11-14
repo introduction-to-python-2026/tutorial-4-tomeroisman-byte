@@ -8,12 +8,10 @@ def find_all_starts(dna):
 
 def find_first_in_register_stop(dna, start):
     dna = dna.upper()
-    i = start
-    while i <= len(dna) - 3:
+    for i in range(start, len(dna) - 2, 3):
         codon = dna[i:i+3]
-        if codon == "TAA" or codon == "TAG" or codon == "TGA":
+        if codon in ("TAA", "TAG", "TGA"):
             return i
-        i += 3
     return -1
 
 def all_orfs_range(dna):
@@ -37,4 +35,3 @@ def longest_orf(dna):
         if len(orf) > len(longest):
             longest = orf
     return longest
-
