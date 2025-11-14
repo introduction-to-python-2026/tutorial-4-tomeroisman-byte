@@ -21,6 +21,7 @@ def all_orfs_range(dna):
     return orf_ranges
 
 def longest_orf(dna):
+    dna = dna.upper()
     longest = ""
     for start, stop in all_orfs_range(dna.upper()):
         orf = dna[start:stop]   
